@@ -22,17 +22,17 @@ jobs:
         uses: docker/setup-buildx-action@v4
 
       - name: Build and test
-        uses: docker/build-push-action@v7
-        with:
-          target: test
-          load: true
-          build-args: |
-            SKIP_POSTGRES_TESTS=true
+  uses: docker/build-push-action@v7
+  with:
+    context: .
+    target: test
+    load: true
 
-      - name: Build and push
-        uses: docker/build-push-action@v7
-        with:
-          platforms: linux/amd64,linux/arm64
-          push: true
-          target: final
-          tags: ${{ vars.DOCKER_USERNAME }}/spring-petclinic:latest
+     - name: Build and push
+  uses: docker/build-push-action@v7
+  with:
+    context: .
+    platforms: linux/amd64,linux/arm64
+    push: true
+    target: final
+    tags: ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
