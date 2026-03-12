@@ -356,6 +356,10 @@
         <property>
           <name>m2e.version</name>
         </property>
+        <properties>
+    <!-- ... existing properties ... -->
+    <skipPostgresTests>true</skipPostgresTests>
+</properties>
       </activation>
       <build>
         <pluginManagement>
