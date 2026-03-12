@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -21,18 +22,18 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
-      - name: Build and test
-  uses: docker/build-push-action@v7
-  with:
-    context: .
-    target: test
-    load: true
+      - name: Build image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          target: package
+          load: true
 
-     - name: Build and push
-  uses: docker/build-push-action@v7
-  with:
-    context: .
-    platforms: linux/amd64,linux/arm64
-    push: true
-    target: final
-    tags: ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
+      - name: Build and push image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          platforms: linux/amd64
+          push: true
+          target: final
+          tags: dyala/docker:latest
